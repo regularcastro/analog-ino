@@ -3,13 +3,16 @@ import time as t
 import sys as s
 import serial.tools.list_ports as st
 
+def mimir():
+    print("----------\nEOF")
+    t.sleep(1)
+    s.exit()
 
 def list_serial_ports():
     ports = st.comports()
     if not ports:
         print("no serial ports found")
-        t.sleep(3)
-        s.exit()
+        mimir()
     else:
         item = 1
         print("existing serial ports:\n")
@@ -27,7 +30,7 @@ def list_serial_ports():
 
 list_serial_ports()
 
-com = input("type a COM to perform a serial read: ")
+com = input("type a COM port number: ")
 
 try:
     ser = serial.Serial(
@@ -40,20 +43,17 @@ try:
 except serial.SerialException as e:
     if "FileNotFoundError" in str(e):
         print(f"the specified COM{com} port does not exist")
-        t.sleep(3)
-        s.exit()
+        mimir()
     else:
         print(f"an error occurred: {e}")
-        t.sleep(3)
-        s.exit()
+        mimir()
 except Exception as e:
     print(f"an unexpected error occurred: {e}")
-    t.sleep(3)
-    s.exit()
+    mimir()
 
 ser.open()
-def serialdata():
-    print('press crtl + C in order to exit.\n')
+def readserialdata():
+    print('press crtl + C to exit.\n')
     t.sleep(2)
     time = [3,2,1]
     for i in time:
@@ -67,7 +67,18 @@ def serialdata():
             print(data)
     except KeyboardInterrupt:
         print('keyboard interrupt detected')
-        t.sleep(3)
-        s.exit()
+        mimir()
 
-serialdata()
+def sendserialdata():
+    msg = input('type a command to send: ')
+    data = ser.write(bytearray(msg,'ascii'))
+    print(f'data bytes length: {data}')
+order = input("press 1 to read data: ")
+if order == '1':
+    readserialdata()
+elif order == '2':
+    mimir()
+    #sendserialdata()
+else:
+    mimir()
+    
