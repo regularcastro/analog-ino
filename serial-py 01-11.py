@@ -106,3 +106,4 @@ elif order == '3':
     sendexpectserialdata()
 else:
     mimir()
+print("?")
