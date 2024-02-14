@@ -85,12 +85,11 @@ def sendexpectserialdata():
     #print(f'data bytes length: {data}')
     try:
         while True:
-            msg = input('type a command to send: ')
+            msg = input('-------------\ntype a command to send: ')
             data = ser.write(bytearray(msg,'ascii'))
             if data:
                 print("data sent!\n")
             data = ser.readline().decode('utf-8')
-            ser.close()
             print(f'data read: {data}')
     except KeyboardInterrupt:
         print('keyboard interrupt detected')
@@ -106,4 +105,3 @@ elif order == '3':
     sendexpectserialdata()
 else:
     mimir()
-print("?")
