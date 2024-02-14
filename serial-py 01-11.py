@@ -59,7 +59,7 @@ def readserialdata():
     for i in time:
         print(f'processing in {i}')
         i+=-1
-        t.sleep(1)
+        t.sleep(0.25)
     
     try:
         while True:
@@ -90,17 +90,19 @@ def sendexpectserialdata():
             if data:
                 print("data sent!\n")
             data = ser.readline().decode('utf-8')
-            print(data)
+            ser.close()
+            print(f'data read: {data}')
     except KeyboardInterrupt:
         print('keyboard interrupt detected')
         mimir()
     
-order = input("press 1 to read data or press 2 to send data: ")
+order = input("press 1 to read data, press 2 to send data, press 3 to send-expect data: ")
 if order == '1':
     readserialdata()
 elif order == '2':
     #mimir()
     sendserialdata()
+elif order == '3':
+    sendexpectserialdata()
 else:
     mimir()
-    
