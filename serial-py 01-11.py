@@ -59,7 +59,7 @@ def readserialdata():
     for i in time:
         print(f'processing in {i}')
         i+=-1
-        t.sleep(1)
+        t.sleep(0.25)
     
     try:
         while True:
@@ -76,16 +76,33 @@ def sendserialdata():
             msg = input('type a command to send: ')
             data = ser.write(bytearray(msg,'ascii'))
             print("data sent!\n")
+            
+    except KeyboardInterrupt:
+        print('keyboard interrupt detected')
+        mimir()
+        
+def sendexpectserialdata():
+    #print(f'data bytes length: {data}')
+    try:
+        while True:
+            msg = input('type a command to send: ')
+            data = ser.write(bytearray(msg,'ascii'))
+            if data:
+                print("data sent!\n")
+            data = ser.readline().decode('utf-8')
+            ser.close()
+            print(f'data read: {data}')
     except KeyboardInterrupt:
         print('keyboard interrupt detected')
         mimir()
     
-order = input("press 1 to read data or press 2 to send data: ")
+order = input("press 1 to read data, press 2 to send data, press 3 to send-expect data: ")
 if order == '1':
     readserialdata()
 elif order == '2':
     #mimir()
     sendserialdata()
+elif order == '3':
+    sendexpectserialdata()
 else:
     mimir()
-    
