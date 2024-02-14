@@ -14,7 +14,7 @@ def list_serial_ports():
         print("no serial ports found")
         mimir()
     else:
-        item = 1
+        item = 0
         print("existing serial ports:\n")
         for port in ports:
             print(f'ITEM {len(ports)}')
@@ -70,15 +70,37 @@ def readserialdata():
         mimir()
 
 def sendserialdata():
-    msg = input('type a command to send: ')
-    data = ser.write(bytearray(msg,'ascii'))
-    print(f'data bytes length: {data}')
-order = input("press 1 to read data: ")
+    #print(f'data bytes length: {data}')
+    try:
+        while True:
+            msg = input('type a command to send: ')
+            data = ser.write(bytearray(msg,'ascii'))
+            print("data sent!\n")
+            
+    except KeyboardInterrupt:
+        print('keyboard interrupt detected')
+        mimir()
+        
+def sendexpectserialdata():
+    #print(f'data bytes length: {data}')
+    try:
+        while True:
+            msg = input('type a command to send: ')
+            data = ser.write(bytearray(msg,'ascii'))
+            if data:
+                print("data sent!\n")
+            data = ser.readline().decode('utf-8')
+            print(data)
+    except KeyboardInterrupt:
+        print('keyboard interrupt detected')
+        mimir()
+    
+order = input("press 1 to read data or press 2 to send data: ")
 if order == '1':
     readserialdata()
 elif order == '2':
-    mimir()
-    #sendserialdata()
+    #mimir()
+    sendserialdata()
 else:
     mimir()
     
