@@ -70,31 +70,36 @@ def readserialdata():
         mimir()
 
 def sendserialdata():
-    #print(f'data bytes length: {data}')
     try:
         while True:
             msg = input('type a command to send: ')
             data = ser.write(bytearray(msg,'ascii'))
             print("data sent!\n")
-            
     except KeyboardInterrupt:
         print('keyboard interrupt detected')
         mimir()
         
 def sendexpectserialdata():
-    #print(f'data bytes length: {data}')
     try:
         while True:
             msg = input('-------------\ntype a command to send: ')
-            data = ser.write(bytearray(msg,'ascii'))
+            data = msg.encode().hex()
+            #print(data)
             if data:
+                ser.write(bytearray(msg,'ascii'))
                 print("data sent!\n")
-            data = ser.readline().decode('utf-8')
-            print(f'data read: {data}')
+                try:
+                    while True:
+                        data = ser.readline().decode('utf-8')
+                        print(data)
+                except KeyboardInterrupt:
+                    print('keyboard interrupt detected')
+                    #mimir()
+                
     except KeyboardInterrupt:
         print('keyboard interrupt detected')
         mimir()
-    
+        
 order = input("press 1 to read data, press 2 to send data, press 3 to send-expect data: ")
 if order == '1':
     readserialdata()
