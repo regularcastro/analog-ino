@@ -62,9 +62,15 @@ def readserialdata():
         t.sleep(0.25)
     
     try:
-        while True:
+        for data in ser.readline().decode('utf-8'):
+            if '13':
+                print('CARRIAGE RETURN')
+                mimir()
+            else:
+                print(ser.readline().decode('utf-8'))
+        """while True:
             data = ser.readline().decode('utf-8')
-            print(data)
+            print(data)"""
     except KeyboardInterrupt:
         print('keyboard interrupt detected')
         mimir()
@@ -83,10 +89,10 @@ def sendexpectserialdata():
     try:
         while True:
             msg = input('-------------\ntype a command to send: ')
-            data = msg.encode().hex()
-            #print(data)
+            #data = msg.encode().hex()
+            data = data.encode('ascii')
             if data:
-                ser.write(bytearray(msg,'ascii'))
+                ser.write(bytearray(data,'ascii'))
                 print("data sent!\n")
                 try:
                     while True:
@@ -94,8 +100,7 @@ def sendexpectserialdata():
                         print(data)
                 except KeyboardInterrupt:
                     print('keyboard interrupt detected')
-                    #mimir()
-                
+                    
     except KeyboardInterrupt:
         print('keyboard interrupt detected')
         mimir()
