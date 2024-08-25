@@ -10,3 +10,7 @@ Script para envio de comandos ASCII para porta serial da balança Metler Toledo 
 <li>
 <b>serial-py mtt-zero//tare//measure</b> <br>
 Script para envio de comandos ASCII para porta serial das balanças Metler Toledo. Recomenda-se a leitura dos manuais aplicáveis, disponíveis no site do fabricante.
+
+<li>
+<b>inputstdtest</b> <br>
+Script para teste de detecção de teclas F1,F2,F3 e F4 pressionadas.
