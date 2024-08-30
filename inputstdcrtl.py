@@ -28,40 +28,32 @@ def value3():
     print(log(),'Zerar')
     register_sound()
 
+def value4():
+    print(log(),'Sair')
+    s.Beep(1100, 100)
+    s.Beep(700, 300)
+    sys.exit()
+    
 def press(key):
     global pressed
     if kb.is_pressed("ctrl+1"):
-        #print('%sp' % key)
+        
         value1()  
         pressed = True
-    if not pressed and key == (keyboard.Key.space and keyboard.Key.ctrl):
-        #print('%sp' % key)
-        value1()
-        pressed = True
-    if not pressed and key == keyboard.Key.f4:
-        #print('%sp' % key) 
-        pressed = True
-
-def release(key):
-    global pressed
-    if key == keyboard.Key.f2:
-        value1()
-        pressed = False # key is released
-    if key == keyboard.Key.f3:
-        #print('%sr' %key)
+    if kb.is_pressed("ctrl+2"):
+        
         value2()
-        pressed = False # key is released
-    if key == keyboard.Key.f4:
-        #print('%sr' %key) 
-        value3()  
-        pressed = False # key is released
-    if key == keyboard.Key.f6:
-        print(log(),'Sair')
-        s.Beep(1100, 100)
-        s.Beep(700, 300)
-        sys.exit()
+        pressed = True
+    if kb.is_pressed("ctrl+3"):
+        
+        value3()
+        pressed = True
+    if kb.is_pressed("ctrl+4"):
+        
+        value4()
+        pressed = True
 
-with keyboard.Listener( on_press=press, on_release=release) as listener: 
+with keyboard.Listener(on_press=press) as listener: 
     listener.join()
 
 #
